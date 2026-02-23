@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyrics Library App - Hi-Fi Wireframes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7C3AED;
+            --secondary: #EC4899;
+            --accent: #F59E0B;
+            --bg-primary: #FDFBF7;
+            --bg-secondary: #F5F1E8;
+            --bg-elevated: #FFFFFF;
+            --text-primary: #1F1B16;
+            --text-secondary: #6B6557;
+            --text-tertiary: #9E9788;
+            --border: #E8E3D8;
+            --gradient-1: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --gradient-2: linear-gradient(135deg, #F59E0B 0%, #EC4899 100%);
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #1A1A1A;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #A0A0A0;
+            margin-bottom: 4rem;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .wireframe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .phone-frame {
+            background: #2A2A2A;
+            border-radius: 48px;
+            padding: 16px;
+            box-shadow: 0 40px 100px rgba(124, 58, 237, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out both;
+            transition: transform 0.3s ease;
+        }
+
+        .phone-frame:hover {
+            transform: translateY(-8px);
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 32px;
+            background: var(--bg-primary);
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            background: var(--bg-primary);
+            border-radius: 36px;
+            overflow: hidden;
+            aspect-ratio: 9 / 19.5;
+            position: relative;
+        }
+
+        .screen-label {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #A0A0A0;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 12px;
+            left: 24px;
+            right: 24px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            z-index: 5;
+            font-weight: 600;
+        }
+
+        /* Artists Browse Screen */
+        .artists-screen {
+            padding: 56px 24px 100px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .page-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .search-bar {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .search-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--text-tertiary);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .search-icon::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 7px;
+            height: 2px;
+            background: var(--text-tertiary);
+            transform: rotate(-45deg);
+        }
+
+        .search-text {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 2rem;
+        }
+
+        .alphabet-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .alphabet-letter.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .artist-card {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .artist-initial {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .artist-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .artist-songs-count {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Artist Detail Screen */
+        .artist-detail {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artist-header {
+            padding: 56px 24px 32px;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 56px;
+            left: 24px;
+            width: 28px;
+            height: 28px;
+            border-radius: 0;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn::before {
+            content: '\2039';
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .artist-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            margin: 0 auto 16px;
+            border: 4px solid var(--bg-primary);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .artist-detail-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .artist-stats {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .songs-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .section-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .song-item {
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .song-item-info {
+            flex: 1;
+        }
+
+        .song-item-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .song-item-meta {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .view-lyrics-btn {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 6px 12px;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Lyrics Display Screen */
+        .lyrics-screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lyrics-header {
+            padding: 64px 24px 24px;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+
+        .lyrics-header .back-btn {
+            top: 34px;
+            left: 24px;
+        }
+
+        .lyrics-song-info {
+            margin-top: 0;
+        }
+
+        .lyrics-song-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .lyrics-artist-name {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .lyrics-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: var(--bg-elevated);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .lyrics-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 24px 24px;
+        }
+
+        .lyric-verse {
+            margin-bottom: 2rem;
+        }
+
+        .verse-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .lyric-line {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        /* Search Screen */
+        .search-screen {
+            padding: 56px 24px 24px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-bar-active {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.2);
+        }
+
+        .search-input {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 8px;
+            overflow-x: auto;
+        }
+
+        .filter-tab {
+            padding: 10px 18px;
+            border-radius: 20px;
+            background: var(--bg-elevated);
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .search-results {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .result-category {
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .result-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .result-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--gradient-2);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .result-meta {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Collection Screen */
+        .collection-screen {
+            padding: 56px 24px 100px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .collection-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .collection-tab {
+            padding: 12px 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .collection-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .collection-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .collection-item {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .collection-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .collection-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .collection-item-artist {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .bookmark-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(124, 58, 237, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .collection-item-preview {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-elevated);
+            border-top: 2px solid var(--border);
+            padding: 16px 24px 24px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-tertiary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 10px;
+            background: currentColor;
+            opacity: 0.2;
+        }
+
+        .nav-item.active .nav-icon {
+            opacity: 1;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wireframe-grid .phone-frame:nth-child(1) { animation-delay: 0.1s; }
+        .wireframe-grid .phone-frame:nth-child(2) { animation-delay: 0.2s; }
+        .wireframe-grid .phone-frame:nth-child(3) { animation-delay: 0.3s; }
+        .wireframe-grid .phone-frame:nth-child(4) { animation-delay: 0.4s; }
+        .wireframe-grid .phone-frame:nth-child(5) { animation-delay: 0.5s; }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .wireframe-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lyric Library</h1>
+        <p class="subtitle">High-fidelity wireframes for a lyrics-focused mobile application</p>
+
+        <div class="wireframe-grid">
+            <!-- Screen 1: Artists Browse -->
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>⚡ 85%</span>
+                    </div>
+                    
+                    <div class="artists-screen">
+                        <h2 class="page-title">Artists</h2>
+                        <p class="page-subtitle">Browse lyrics by artist</p>
+
+                        <div class="search-bar">
+                            <div class="search-icon"></div>
+                            <div class="search-text">Search artists...</div>
+                        </div>
+
+                        <div class="alphabet-nav">
+                            <div class="alphabet-letter">A</div>
+                            <div class="alphabet-letter">B</div>
+                            <div class="alphabet-letter">C</div>
+                            <div class="alphabet-letter">D</div>
+                            <div class="alphabet-letter">E</div>
+                            <div class="alphabet-letter">F</div>
+                            <div class="alphabet-letter">G</div>
+                            <div class="alphabet-letter">H</div>
+                            <div class="alphabet-letter">I</div>
+                            <div class="alphabet-letter">J</div>
+                            <div class="alphabet-letter">K</div>
+                            <div class="alphabet-letter">L</div>
+                            <div class="alphabet-letter">M</div>
+                        </div>
+
+                        <div class="artist-grid">
+                            <div class="artist-card">
+                                <div class="artist-initial">A</div>
+                                <div class="artist-name">Adele</div>
+                                <div class="artist-songs-count">47 songs</div>
+                            </div>
+                            <div class="artist-card">
+                                <div class="artist-initial" style="background: var(--gradient-2);">B</div>
+                                <div class="artist-name">Beyoncé</div>
+                                <div class="artist-songs-count">89 songs</div>
+                            </div>
+                            <div class="artist-card">
+                                <div class="artist-initial">C</div>
+                                <div class="artist-name">Coldplay</div>
+                                <div class="artist-songs-count">112 songs</div>
+                            </div>
+                            <div class="artist-card">
+                                <div class="artist-initial" style="background: var(--gradient-2);">D</div>
+                                <div class="artist-name">Drake</div>
+                                <div class="artist-songs-count">156 songs</div>
+                            </div>
+                            <div class="artist-card">
+                                <div class="artist-initial">E</div>
+                                <div class="artist-name">Ed Sheeran</div>
+                                <div class="artist-songs-count">73 songs</div>
+                            </div>
+                            <div class="artist-card">
+                                <div class="artist-initial" style="background: var(--gradient-2);">T</div>
+                                <div class="artist-name">Taylor Swift</div>
+                                <div class="artist-songs-count">203 songs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom-nav">
+                        <div class="nav-item active">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Artists</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Songs</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Search</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Saved</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">Artists Browse</div>
+            </div>
+
+            <!-- Screen 2: Songs Browse -->
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>⚡ 85%</span>
+                    </div>
+                    
+                    <div class="artists-screen">
+                        <h2 class="page-title">Songs</h2>
+                        <p class="page-subtitle">Browse all available lyrics</p>
+
+                        <div class="search-bar">
+                            <div class="search-icon"></div>
+                            <div class="search-text">Search songs...</div>
+                        </div>
+
+                        <div class="filter-tabs" style="margin-bottom: 1.5rem;">
+                            <div class="filter-tab active">A-Z</div>
+                            <div class="filter-tab">Popular</div>
+                            <div class="filter-tab">Recent</div>
+                            <div class="filter-tab">Genre</div>
+                        </div>
+
+                        <div class="songs-list" style="padding: 0;">
+                            <div class="section-header">A</div>
+                            
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">All of Me</div>
+                                    <div class="song-item-meta">John Legend</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Anti-Hero</div>
+                                    <div class="song-item-meta">Taylor Swift</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">As It Was</div>
+                                    <div class="song-item-meta">Harry Styles</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="section-header" style="margin-top: 1rem;">B</div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Blank Space</div>
+                                    <div class="song-item-meta">Taylor Swift</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Blinding Lights</div>
+                                    <div class="song-item-meta">The Weeknd</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="section-header" style="margin-top: 1rem;">C</div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Cruel Summer</div>
+                                    <div class="song-item-meta">Taylor Swift</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Circles</div>
+                                    <div class="song-item-meta">Post Malone</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Artists</div>
+                        </div>
+                        <div class="nav-item active">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Songs</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Search</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Saved</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">Songs Browse</div>
+            </div>
+
+            <!-- Screen 3: Artist Detail -->
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>⚡ 85%</span>
+                    </div>
+                    
+                    <div class="artist-detail">
+                        <div class="artist-header">
+                            <div class="back-btn"></div>
+                            <div class="artist-avatar">T</div>
+                            <h2 class="artist-detail-name">Taylor Swift</h2>
+                            <div class="artist-stats">203 songs available</div>
+                        </div>
+
+                        <div class="songs-list">
+                            <div class="section-header">Popular Songs</div>
+                            
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Anti-Hero</div>
+                                    <div class="song-item-meta">Midnights • 2022</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Cruel Summer</div>
+                                    <div class="song-item-meta">Lover • 2019</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Blank Space</div>
+                                    <div class="song-item-meta">1989 • 2014</div>
+                                </div>
+                                <div class="view-lyrics-btn">View</div>
+                            </div>
+
+                            <div class="section-header" style="margin-top: 1.5rem;">Albums</div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Midnights</div>
+                                    <div class="song-item-meta">13 songs • 2022</div>
+                                </div>
+                                <div class="view-lyrics-btn">Browse</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">Folklore</div>
+                                    <div class="song-item-meta">16 songs • 2020</div>
+                                </div>
+                                <div class="view-lyrics-btn">Browse</div>
+                            </div>
+
+                            <div class="song-item">
+                                <div class="song-item-info">
+                                    <div class="song-item-title">1989</div>
+                                    <div class="song-item-meta">13 songs • 2014</div>
+                                </div>
+                                <div class="view-lyrics-btn">Browse</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">Artist Detail</div>
+            </div>
+
+            <!-- Screen 4: Lyrics Display -->
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>⚡ 85%</span>
+                    </div>
+                    
+                    <div class="lyrics-screen">
+                        <div class="lyrics-header">
+                            <div class="back-btn"></div>
+                            <div class="lyrics-song-info">
+                                <h2 class="lyrics-song-title">Anti-Hero</h2>
+                                <div class="lyrics-artist-name">Taylor Swift • Midnights</div>
+                            </div>
+                            <div class="lyrics-actions">
+                                <div class="action-btn primary">Save</div>
+                                <div class="action-btn">Share</div>
+                                <div class="action-btn">Text Size</div>
+                            </div>
+                        </div>
+
+                        <div class="lyrics-content">
+                            <div class="lyric-verse">
+                                <div class="verse-label">Verse 1</div>
+                                <div class="lyric-line">I have this thing where I get older</div>
+                                <div class="lyric-line">But just never wiser</div>
+                                <div class="lyric-line">Midnights become my afternoons</div>
+                                <div class="lyric-line">When my depression works the graveyard shift</div>
+                                <div class="lyric-line">All of the people I've ghosted stand there</div>
+                                <div class="lyric-line">In the room</div>
+                            </div>
+
+                            <div class="lyric-verse">
+                                <div class="verse-label">Pre-Chorus</div>
+                                <div class="lyric-line">I should not be left to my own devices</div>
+                                <div class="lyric-line">They come with prices and vices</div>
+                                <div class="lyric-line">I end up in crisis</div>
+                                <div class="lyric-line">(Tale as old as time)</div>
+                            </div>
+
+                            <div class="lyric-verse">
+                                <div class="verse-label">Chorus</div>
+                                <div class="lyric-line">I wake up screaming from dreaming</div>
+                                <div class="lyric-line">One day I'll watch as you're leaving</div>
+                                <div class="lyric-line">'Cause you got tired of my scheming</div>
+                                <div class="lyric-line">(For the last time)</div>
+                                <div class="lyric-line">It's me, hi, I'm the problem, it's me</div>
+                                <div class="lyric-line">At teatime, everybody agrees</div>
+                            </div>
+
+                            <div class="lyric-verse">
+                                <div class="verse-label">Verse 2</div>
+                                <div class="lyric-line">Did you hear my covert narcissism</div>
+                                <div class="lyric-line">I disguise as altruism</div>
+                                <div class="lyric-line">Like some kind of congressman?</div>
+                                <div class="lyric-line">I wake up screaming from dreaming</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">Lyrics Display</div>
+            </div>
+
+            <!-- Screen 5: Search -->
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>⚡ 85%</span>
+                    </div>
+                    
+                    <div class="search-screen">
+                        <h2 class="page-title">Search</h2>
+                        <p class="page-subtitle">Find songs and artists</p>
+
+                        <div class="search-bar-active">
+                            <div class="search-icon"></div>
+                            <div class="search-input">cruel summer</div>
+                        </div>
+
+                        <div class="filter-tabs">
+                            <div class="filter-tab active">All</div>
+                            <div class="filter-tab">Songs</div>
+                            <div class="filter-tab">Artists</div>
+                            <div class="filter-tab">Albums</div>
+                        </div>
+
+                        <div class="search-results">
+                            <div class="result-category">
+                                <div class="category-title">Songs</div>
+                                <div class="result-item">
+                                    <div class="result-icon">T</div>
+                                    <div class="result-info">
+                                        <div class="result-title">Cruel Summer</div>
+                                        <div class="result-meta">Taylor Swift • Lover</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="result-category">
+                                <div class="category-title">Artists</div>
+                                <div class="result-item">
+                                    <div class="result-icon" style="background: var(--gradient-1);">T</div>
+                                    <div class="result-info">
+                                        <div class="result-title">Taylor Swift</div>
+                                        <div class="result-meta">203 songs available</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="result-category">
+                                <div class="category-title">Albums</div>
+                                <div class="result-item">
+                                    <div class="result-icon" style="background: var(--gradient-2); border-radius: 8px;">L</div>
+                                    <div class="result-info">
+                                        <div class="result-title">Lover</div>
+                                        <div class="result-meta">Taylor Swift • 18 songs</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Artists</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Songs</div>
+                        </div>
+                        <div class="nav-item active">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Search</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Saved</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">Search</div>
+            </div>
+
+            <!-- Screen 6: Saved Collection -->
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="status-bar">
+                        <span>9:41</span>
+                        <span>⚡ 85%</span>
+                    </div>
+                    
+                    <div class="collection-screen">
+                        <h2 class="page-title">Saved Lyrics</h2>
+                        <p class="page-subtitle">Your bookmarked collection</p>
+
+                        <div class="collection-tabs">
+                            <div class="collection-tab active">Recently Saved</div>
+                            <div class="collection-tab">Most Viewed</div>
+                        </div>
+
+                        <div class="collection-list">
+                            <div class="collection-item">
+                                <div class="collection-item-header">
+                                    <div>
+                                        <div class="collection-item-title">Anti-Hero</div>
+                                        <div class="collection-item-artist">Taylor Swift</div>
+                                    </div>
+                                    <div class="bookmark-icon">★</div>
+                                </div>
+                                <div class="collection-item-preview">
+                                    "I have this thing where I get older but just never wiser..."
+                                </div>
+                            </div>
+
+                            <div class="collection-item">
+                                <div class="collection-item-header">
+                                    <div>
+                                        <div class="collection-item-title">Flowers</div>
+                                        <div class="collection-item-artist">Miley Cyrus</div>
+                                    </div>
+                                    <div class="bookmark-icon">★</div>
+                                </div>
+                                <div class="collection-item-preview">
+                                    "I can buy myself flowers, write my name in the sand..."
+                                </div>
+                            </div>
+
+                            <div class="collection-item">
+                                <div class="collection-item-header">
+                                    <div>
+                                        <div class="collection-item-title">Blinding Lights</div>
+                                        <div class="collection-item-artist">The Weeknd</div>
+                                    </div>
+                                    <div class="bookmark-icon">★</div>
+                                </div>
+                                <div class="collection-item-preview">
+                                    "I said, ooh, I'm blinded by the lights..."
+                                </div>
+                            </div>
+
+                            <div class="collection-item">
+                                <div class="collection-item-header">
+                                    <div>
+                                        <div class="collection-item-title">Someone Like You</div>
+                                        <div class="collection-item-artist">Adele</div>
+                                    </div>
+                                    <div class="bookmark-icon">★</div>
+                                </div>
+                                <div class="collection-item-preview">
+                                    "Never mind, I'll find someone like you..."
+                                </div>
+                            </div>
+
+                            <div class="collection-item">
+                                <div class="collection-item-header">
+                                    <div>
+                                        <div class="collection-item-title">Shape of You</div>
+                                        <div class="collection-item-artist">Ed Sheeran</div>
+                                    </div>
+                                    <div class="bookmark-icon">★</div>
+                                </div>
+                                <div class="collection-item-preview">
+                                    "The club isn't the best place to find a lover..."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Artists</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Songs</div>
+                        </div>
+                        <div class="nav-item">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Search</div>
+                        </div>
+                        <div class="nav-item active">
+                            <div class="nav-icon"></div>
+                            <div class="nav-label">Saved</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">Saved Collection</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
