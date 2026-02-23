@@ -1,0 +1,109 @@
+{
+  "s01": {
+    "songId": "s01",
+    "songTitle": "All of Me",
+    "artistName": "John Legend",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["What would I do without your smart mouth?", "Drawing me in, and you kicking me out", "You've got my head spinning, no kidding", "I can't pin you down"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["'Cause all of me loves all of you", "Love your curves and all your edges", "All your perfect imperfections", "Give your all to me, I'll give my all to you"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["How many times do I have to tell you", "Even when you're crying, you're beautiful too", "The world is beating you down", "I'm around through every mood"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["'Cause all of me loves all of you", "Love your curves and all your edges", "All your perfect imperfections", "Give your all to me, I'll give my all to you"] }
+    ]
+  },
+  "s02": {
+    "songId": "s02",
+    "songTitle": "Anti-Hero",
+    "artistName": "Taylor Swift",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["I have this thing where I get older but just never wiser", "Midnights become my afternoons", "When my depression works the graveyard shift", "All of the people I've ghosted stand there in the room"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["It's me, hi, I'm the problem, it's me", "At tea time, everybody agrees", "I'll stare directly at the sun but never in the mirror", "It must be exhausting always rooting for the anti-hero"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["Sometimes I feel like everybody is a sexy baby", "And I'm a monster on the hill", "Too big to hang out, slowly lurching toward your favorite city", "Pierced through the heart but never killed"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["It's me, hi, I'm the problem, it's me", "At tea time, everybody agrees", "I'll stare directly at the sun but never in the mirror", "It must be exhausting always rooting for the anti-hero"] }
+    ]
+  },
+  "s05": {
+    "songId": "s05",
+    "songTitle": "Blinding Lights",
+    "artistName": "The Weeknd",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["I've been tryna call", "I've been on my own for long enough", "Maybe you can show me how to love, maybe", "I'm going through withdrawals"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["I said, ooh, I'm blinded by the lights", "No, I can't sleep until I feel your touch", "I said, ooh, I'm drowning in the night", "Oh, when I'm like this, you're the one I trust"] },
+      { "type": "bridge", "label": "Bridge", "lines": ["I'm running out of time", "'Cause I can see the sun light up the sky", "So I hit the road in overdrive, baby", "Oh, the city's cold and empty"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["I said, ooh, I'm blinded by the lights", "No, I can't sleep until I feel your touch", "I said, ooh, I'm drowning in the night", "Oh, when I'm like this, you're the one I trust"] }
+    ]
+  },
+  "s09": {
+    "songId": "s09",
+    "songTitle": "Someone Like You",
+    "artistName": "Adele",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["I heard that you're settled down", "That you found a girl and you're married now", "I heard that your dreams came true", "Guess she gave you things I didn't give to you"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["Never mind, I'll find someone like you", "I wish nothing but the best for you too", "Don't forget me, I beg", "I remember you said"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["You know how the time flies", "Only yesterday was the time of our lives", "We were born and raised in a summer haze", "Bound by the surprise of our glory days"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["Never mind, I'll find someone like you", "I wish nothing but the best for you too", "Don't forget me, I beg", "I remember you said"] }
+    ]
+  },
+  "s10": {
+    "songId": "s10",
+    "songTitle": "Shape of You",
+    "artistName": "Ed Sheeran",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["The club isn't the best place to find a lover", "So the bar is where I go", "Me and my friends at the table doing shots", "Drinking fast and then we talk slow"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["I'm in love with the shape of you", "We push and pull like a magnet do", "Although my heart is falling too", "I'm in love with your body"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["One week in we let the story begin", "We're going out on our first date", "You and me are thrifty, so go all you can eat", "Fill up your bag and I fill up a plate"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["I'm in love with the shape of you", "We push and pull like a magnet do", "Although my heart is falling too", "I'm in love with your body"] }
+    ]
+  },
+  "s11": {
+    "songId": "s11",
+    "songTitle": "Fix You",
+    "artistName": "Coldplay",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["When you try your best but you don't succeed", "When you get what you want but not what you need", "When you feel so tired but you can't sleep", "Stuck in reverse"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["And the tears come streaming down your face", "When you lose something you can't replace", "When you love someone but it goes to waste", "Could it be worse?"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["Lights will guide you home", "And ignite your bones", "And I will try to fix you"] }
+    ]
+  },
+  "s13": {
+    "songId": "s13",
+    "songTitle": "Levitating",
+    "artistName": "Dua Lipa",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["If you wanna run away with me, I know a galaxy", "And I can take you for a ride", "I had a premonition that we fell into a rhythm", "Where the music don't stop for life"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["You want me, I want you, baby", "My sugarboo, I'm levitating", "The Milky Way, we're renegading", "Yeah, yeah, yeah, yeah, yeah"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["I got you, moonlight, you're my starlight", "I need you all night, come on, dance with me", "I'm levitating", "You, moonlight, you're my starlight"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["You want me, I want you, baby", "My sugarboo, I'm levitating", "The Milky Way, we're renegading", "Yeah, yeah, yeah, yeah, yeah"] }
+    ]
+  },
+  "s14": {
+    "songId": "s14",
+    "songTitle": "Bad Guy",
+    "artistName": "Billie Eilish",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["White shirt now red, my bloody nose", "Sleeping, you're on your tippy toes", "Creeping around like no one knows", "Think you're so criminal"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["So you're a tough guy, like it really rough guy", "Just can't get enough guy, chest always so puffed guy", "I'm that bad type, make your mama sad type", "Make your girlfriend mad tight, might seduce your dad type"] },
+      { "type": "bridge", "label": "Bridge", "lines": ["I'm the bad guy", "Duh"] }
+    ]
+  },
+  "s23": {
+    "songId": "s23",
+    "songTitle": "Rolling in the Deep",
+    "artistName": "Adele",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["There's a fire starting in my heart", "Reaching a fever pitch and it's bringing me out the dark", "Finally, I can see you crystal clear", "Go ahead and sell me out and I'll lay your ship bare"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["We could have had it all", "Rolling in the deep", "You had my heart inside of your hand", "And you played it to the beat"] },
+      { "type": "verse", "label": "Verse 2", "lines": ["Baby, I have no story to be told", "But I've heard one on you and I'm gonna make your head burn", "Think of me in the depths of your despair", "Make a home down there as mine sure won't be shared"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["We could have had it all", "Rolling in the deep", "You had my heart inside of your hand", "And you played it to the beat"] }
+    ]
+  },
+  "s03": {
+    "songId": "s03",
+    "songTitle": "As It Was",
+    "artistName": "Harry Styles",
+    "sections": [
+      { "type": "verse", "label": "Verse 1", "lines": ["Holdin' me back, gravity's holdin' me back", "I want you to hold out the palm of your hand", "Why don't we leave it at that?", "Nothin' to say when everything gets in the way"] },
+      { "type": "chorus", "label": "Chorus", "lines": ["In this world, it's just us", "You know it's not the same as it was", "In this world, it's just us", "You know it's not the same as it was"] },
+      { "type": "bridge", "label": "Bridge", "lines": ["Go home, get ahead, light-speed internet", "I don't wanna talk about the way that it was", "Leave America, two kids follow her", "I don't wanna talk about who's doin' it first"] }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+[
+  { "id": "a01", "name": "Adele", "songCount": 47, "albums": [
+    { "id": "al01", "title": "30", "artistId": "a01", "artistName": "Adele", "releaseYear": 2021, "songCount": 12 },
+    { "id": "al02", "title": "25", "artistId": "a01", "artistName": "Adele", "releaseYear": 2015, "songCount": 11 },
+    { "id": "al03", "title": "21", "artistId": "a01", "artistName": "Adele", "releaseYear": 2011, "songCount": 11 }
+  ]},
+  { "id": "a02", "name": "Beyoncé", "songCount": 89, "albums": [
+    { "id": "al04", "title": "Renaissance", "artistId": "a02", "artistName": "Beyoncé", "releaseYear": 2022, "songCount": 16 },
+    { "id": "al05", "title": "Lemonade", "artistId": "a02", "artistName": "Beyoncé", "releaseYear": 2016, "songCount": 12 }
+  ]},
+  { "id": "a03", "name": "Coldplay", "songCount": 112, "albums": [
+    { "id": "al06", "title": "Music of the Spheres", "artistId": "a03", "artistName": "Coldplay", "releaseYear": 2021, "songCount": 12 },
+    { "id": "al07", "title": "A Head Full of Dreams", "artistId": "a03", "artistName": "Coldplay", "releaseYear": 2015, "songCount": 11 }
+  ]},
+  { "id": "a04", "name": "Drake", "songCount": 156, "albums": [
+    { "id": "al08", "title": "Honestly, Nevermind", "artistId": "a04", "artistName": "Drake", "releaseYear": 2022, "songCount": 14 },
+    { "id": "al09", "title": "Certified Lover Boy", "artistId": "a04", "artistName": "Drake", "releaseYear": 2021, "songCount": 21 }
+  ]},
+  { "id": "a05", "name": "Ed Sheeran", "songCount": 73, "albums": [
+    { "id": "al10", "title": "=", "artistId": "a05", "artistName": "Ed Sheeran", "releaseYear": 2021, "songCount": 14 },
+    { "id": "al11", "title": "÷", "artistId": "a05", "artistName": "Ed Sheeran", "releaseYear": 2017, "songCount": 12 }
+  ]},
+  { "id": "a06", "name": "Taylor Swift", "songCount": 203, "albums": [
+    { "id": "al12", "title": "Midnights", "artistId": "a06", "artistName": "Taylor Swift", "releaseYear": 2022, "songCount": 13 },
+    { "id": "al13", "title": "Folklore", "artistId": "a06", "artistName": "Taylor Swift", "releaseYear": 2020, "songCount": 16 },
+    { "id": "al14", "title": "Lover", "artistId": "a06", "artistName": "Taylor Swift", "releaseYear": 2019, "songCount": 18 },
+    { "id": "al15", "title": "1989", "artistId": "a06", "artistName": "Taylor Swift", "releaseYear": 2014, "songCount": 13 }
+  ]},
+  { "id": "a07", "name": "The Weeknd", "songCount": 98, "albums": [
+    { "id": "al16", "title": "Dawn FM", "artistId": "a07", "artistName": "The Weeknd", "releaseYear": 2022, "songCount": 16 },
+    { "id": "al17", "title": "After Hours", "artistId": "a07", "artistName": "The Weeknd", "releaseYear": 2020, "songCount": 14 }
+  ]},
+  { "id": "a08", "name": "Harry Styles", "songCount": 42, "albums": [
+    { "id": "al18", "title": "Harry's House", "artistId": "a08", "artistName": "Harry Styles", "releaseYear": 2022, "songCount": 13 }
+  ]},
+  { "id": "a09", "name": "Post Malone", "songCount": 67, "albums": [
+    { "id": "al19", "title": "Twelve Carat Toothache", "artistId": "a09", "artistName": "Post Malone", "releaseYear": 2022, "songCount": 14 }
+  ]},
+  { "id": "a10", "name": "Miley Cyrus", "songCount": 54, "albums": [
+    { "id": "al20", "title": "Endless Summer Vacation", "artistId": "a10", "artistName": "Miley Cyrus", "releaseYear": 2023, "songCount": 13 }
+  ]},
+  { "id": "a11", "name": "John Legend", "songCount": 61, "albums": [
+    { "id": "al21", "title": "Legend", "artistId": "a11", "artistName": "John Legend", "releaseYear": 2022, "songCount": 24 }
+  ]},
+  { "id": "a12", "name": "Billie Eilish", "songCount": 38, "albums": [
+    { "id": "al22", "title": "Happier Than Ever", "artistId": "a12", "artistName": "Billie Eilish", "releaseYear": 2021, "songCount": 16 }
+  ]},
+  { "id": "a13", "name": "Dua Lipa", "songCount": 45, "albums": [
+    { "id": "al23", "title": "Future Nostalgia", "artistId": "a13", "artistName": "Dua Lipa", "releaseYear": 2020, "songCount": 11 }
+  ]},
+  { "id": "a14", "name": "Bruno Mars", "songCount": 52, "albums": [
+    { "id": "al24", "title": "An Evening with Silk Sonic", "artistId": "a14", "artistName": "Bruno Mars", "releaseYear": 2021, "songCount": 9 }
+  ]},
+  { "id": "a15", "name": "Ariana Grande", "songCount": 78, "albums": [
+    { "id": "al25", "title": "Positions", "artistId": "a15", "artistName": "Ariana Grande", "releaseYear": 2020, "songCount": 14 }
+  ]}
+]
