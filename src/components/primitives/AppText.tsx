@@ -1,0 +1,62 @@
+import React from 'react';
+import { Text, TextProps, TextStyle } from 'react-native';
+import { colors, textVariants, TextVariant } from '@/theme';
+
+interface AppTextProps extends TextProps {
+  /** Typography variant — see theme/typography.ts for available variants */
+  variant?: TextVariant;
+  /** Override color (default: textPrimary, or textTertiary for meta variants) */
+  color?: string;
+  /** Center text */
+  center?: boolean;
+  children: React.ReactNode;
+}
+
+/**
+ * Themed text component — enforces typography standards.
+ * Always use this instead of raw <Text>.
+ *
+ * Usage:
+ *   <AppText variant="pageTitle">Artists</AppText>
+ *   <AppText variant="itemMeta" color={colors.textTertiary}>47 songs</AppText>
+ */
+export function AppText({
+  variant = 'pageSubtitle',
+  color,
+  center,
+  style,
+  children,
+  ...rest
+}: AppTextProps) {
+  const variantStyle = textVariants[variant];
+
+  const resolvedColor = color ?? getDefaultColor(variant);
+
+  const composedStyle: TextStyle = {
+    ...variantStyle,
+    color: resolvedColor,
+    textAlign: center ? 'center' : undefined,
+  };
+
+  return (
+    <Text style={[composedStyle, style]} {...rest}>
+      {children}
+    </Text>
+  );
+}
+
+/** Maps certain variants to appropriate default colors */
+function getDefaultColor(variant: TextVariant): string {
+  switch (variant) {
+    case 'itemMeta':
+    case 'cardCaption':
+    case 'verseLabel':
+    case 'sectionHeader':
+    case 'preview':
+      return colors.textTertiary;
+    case 'pageSubtitle':
+      return colors.textSecondary;
+    default:
+      return colors.textPrimary;
+  }
+}

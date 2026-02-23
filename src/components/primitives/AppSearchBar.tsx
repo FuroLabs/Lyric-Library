@@ -1,0 +1,139 @@
+import React from 'react';
+import { View, TextInput, StyleSheet, Pressable } from 'react-native';
+import { colors, spacing, radii, shadows, textVariants } from '@/theme';
+
+interface AppSearchBarProps {
+  /** Current value */
+  value: string;
+  /** Change handler */
+  onChangeText: (text: string) => void;
+  /** Placeholder when empty */
+  placeholder?: string;
+  /** Whether the bar is focused/active (styled differently per wireframe) */
+  active?: boolean;
+  /** Called when the input gains focus */
+  onFocus?: () => void;
+  /** Called when the input loses focus */
+  onBlur?: () => void;
+}
+
+/**
+ * Search bar matching wireframe style — either passive (border, icons) or active (purple border, shadow).
+ *
+ * Usage:
+ *   <AppSearchBar value={query} onChangeText={setQuery} placeholder="Search artists..." />
+ */
+export function AppSearchBar({
+  value,
+  onChangeText,
+  placeholder = 'Search...',
+  active = false,
+  onFocus,
+  onBlur,
+}: AppSearchBarProps) {
+  return (
+    <View style={[styles.container, active ? styles.containerActive : styles.containerInactive]}>
+      {/* Search icon (simple circle + line) */}
+      <View style={styles.iconWrapper}>
+        <View style={styles.searchCircle} />
+        <View style={styles.searchHandle} />
+      </View>
+
+      <TextInput
+        style={styles.input}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor={colors.textTertiary}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        returnKeyType="search"
+        autoCorrect={false}
+        accessibilityLabel={placeholder}
+      />
+
+      {value.length > 0 && (
+        <Pressable
+          onPress={() => onChangeText('')}
+          hitSlop={8}
+          accessibilityLabel="Clear search"
+          accessibilityRole="button"
+        >
+          <View style={styles.clearBtn}>
+            <View style={[styles.clearLine, styles.clearLine1]} />
+            <View style={[styles.clearLine, styles.clearLine2]} />
+          </View>
+        </Pressable>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: radii.xl,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    gap: spacing.md,
+    backgroundColor: colors.bgElevated,
+  },
+  containerInactive: {
+    borderWidth: 2,
+    borderColor: colors.border,
+    ...shadows.card,
+  },
+  containerActive: {
+    borderWidth: 3,
+    borderColor: colors.primary,
+    ...shadows.searchActive,
+  },
+  iconWrapper: {
+    width: 18,
+    height: 18,
+    position: 'relative',
+  },
+  searchCircle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: colors.textTertiary,
+  },
+  searchHandle: {
+    position: 'absolute',
+    bottom: -1,
+    right: -1,
+    width: 7,
+    height: 2,
+    backgroundColor: colors.textTertiary,
+    transform: [{ rotate: '-45deg' }],
+  },
+  input: {
+    flex: 1,
+    ...textVariants.searchInput,
+    color: colors.textPrimary,
+    padding: 0,
+    margin: 0,
+  },
+  clearBtn: {
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  clearLine: {
+    position: 'absolute',
+    width: 14,
+    height: 2,
+    backgroundColor: colors.textTertiary,
+    borderRadius: 1,
+  },
+  clearLine1: {
+    transform: [{ rotate: '45deg' }],
+  },
+  clearLine2: {
+    transform: [{ rotate: '-45deg' }],
+  },
+});
