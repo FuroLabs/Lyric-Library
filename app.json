@@ -24,7 +24,8 @@
       "package": "com.furolabs.lyriclibrary"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ]
   }
 }

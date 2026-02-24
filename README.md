@@ -9,7 +9,7 @@ npm install
 npx expo start
 ```
 
-For full setup details, see [SETUP.md](SETUP.md).
+For full setup details, see [SETUP.md](docs/SETUP.md).
 
 ## Architecture overview
 
@@ -36,7 +36,7 @@ flowchart LR
   end
 ```
 
-More details in [ARCHITECTURE.md](ARCHITECTURE.md).
+More details in [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Tech stack
 
@@ -48,20 +48,11 @@ More details in [ARCHITECTURE.md](ARCHITECTURE.md).
 - FlashList (performance lists)
 - Jest + Testing Library
 
-## Intern onboarding checklist
-
-- [ ] Read [SETUP.md](SETUP.md)
-- [ ] Read [ARCHITECTURE.md](ARCHITECTURE.md)
-- [ ] Read [CODING_STANDARDS.md](CODING_STANDARDS.md)
-- [ ] Review [SPRINT_BACKLOG.md](SPRINT_BACKLOG.md)
-- [ ] Run `npm test` and `npm run typecheck`
-- [ ] Create a feature branch: `feature/S2-XX-short-description`
-
 ## Docs
 
-- [SETUP.md](SETUP.md)
-- [ARCHITECTURE.md](ARCHITECTURE.md)
-- [CODING_STANDARDS.md](CODING_STANDARDS.md)
+- [SETUP.md](docs/SETUP.md)
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- [CODING_STANDARDS.md](docs/CODING_STANDARDS.md)
 - [docs/DESIGN_TOKENS.md](docs/DESIGN_TOKENS.md)
 - [docs/COMPONENTS.md](docs/COMPONENTS.md)
 - [docs/BRANCH_WORKFLOW.md](docs/BRANCH_WORKFLOW.md)
