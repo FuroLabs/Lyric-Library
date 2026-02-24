@@ -28,3 +28,7 @@ coverage/
 
 # Build
 *.tsbuildinfo
+
+#Docs
+docs/react-native-3-week-intern-implementation-plan.md
+docs/SPRINT_BACKLOG.md
