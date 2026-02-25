@@ -80,13 +80,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgElevated,
   },
   containerInactive: {
-    borderWidth: 2,
-    borderColor: colors.border,
+    borderWidth: 0,
     ...shadows.card,
   },
   containerActive: {
-    borderWidth: 3,
-    borderColor: colors.primary,
+    borderWidth: 0,
     ...shadows.searchActive,
   },
   iconWrapper: {
