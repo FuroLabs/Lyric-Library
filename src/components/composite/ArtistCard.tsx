@@ -47,7 +47,7 @@ export const ArtistCard = memo(function ArtistCard({
       <AppText variant="cardTitle" center numberOfLines={1}>
         {name}
       </AppText>
-      <AppText variant="cardCaption" center>
+      <AppText variant="cardCaption" center numberOfLines={1}>
         {songCount} songs
       </AppText>
     </Pressable>
@@ -56,13 +56,17 @@ export const ArtistCard = memo(function ArtistCard({
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
+    aspectRatio: 0.85,
     backgroundColor: colors.bgElevated,
     borderRadius: radii.xl,
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.md,
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 2,
     borderColor: colors.border,
+    margin: spacing.xs,
     ...shadows.card,
   },
   pressed: {

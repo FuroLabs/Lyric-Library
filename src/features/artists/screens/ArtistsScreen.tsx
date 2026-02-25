@@ -175,6 +175,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   listContent: {
-    padding: spacing.xs,
+    paddingBottom: spacing.md,
   },
 });
