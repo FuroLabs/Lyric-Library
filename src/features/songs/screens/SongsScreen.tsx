@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, StyleSheet, SectionList, useWindowDimensions, Platform } from 'react-native';
+import { View, StyleSheet, SectionList, useWindowDimensions, Platform, FlatList } from 'react-native';
 import { AppScreen, AppText, AppSearchBar, Chip, SongRow, LoadingState, EmptyState } from '@/components';
 import { useSongs } from '@/hooks/queries/useSongs';
 import { filterSongs } from '@/utils/filters';
@@ -17,20 +17,33 @@ import type { SongsStackParamList } from '@/app/navigationTypes';
  *  - S2-09: Navigate to LyricsScreen on tap
  */
 
-const SORT_OPTIONS = [
+/**
+ * Supported sort modes for SongsScreen
+ */
+type SongSortKey = 'title' | 'artist' | 'recent' | 'popular';
+
+const SORT_OPTIONS: { key: SongSortKey; label: string }[] = [
   { key: 'title', label: 'A-Z' },
+  { key: 'artist', label: 'Artist' },
   { key: 'popular', label: 'Popular' },
   { key: 'recent', label: 'Recent' },
-  { key: 'genre', label: 'Genre' },
 ];
 
 
+/**
+ * SongsScreen displays a searchable, filterable, grouped list of songs.
+ * - Search bar at top
+ * - Filter chips for sort modes
+ * - Grouped list by first letter with sticky section headers
+ * - SongRow for each song, navigates to LyricsScreen
+ * - Loading/empty states
+ */
 export default function SongsScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<SongsStackParamList>>();
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 375;
   const [query, setQuery] = useState('');
-  const [sort, setSort] = useState<'title' | 'artist' | 'recent' | 'popular'>('title');
+  const [sort, setSort] = useState<SongSortKey>('title');
 
   const { data: songs, isLoading, isError } = useSongs(sort);
 
@@ -57,10 +70,10 @@ export default function SongsScreen() {
 
   return (
     <AppScreen style={[styles.screen, { paddingHorizontal: width * 0.04 }]}> {/* 4% padding */}
-      <AppText variant="pageTitle" style={[styles.title, titleFontSize && { fontSize: titleFontSize }]}>
+      <AppText variant="pageTitle" style={[styles.title, isSmallScreen && styles.titleSmall]}> 
         Songs
       </AppText>
-      <AppText variant="pageSubtitle" style={[styles.subtitle, subtitleFontSize && { fontSize: subtitleFontSize }]}>
+      <AppText variant="pageSubtitle" style={[styles.subtitle, isSmallScreen && styles.subtitleSmall]}> 
         Browse all available lyrics
       </AppText>
 
@@ -73,24 +86,22 @@ export default function SongsScreen() {
         />
       </View>
 
-      <View style={styles.chipRowWrapper}>
-        <SectionList
+      <View style={styles.chipRowWrapper}> 
+        {/* Horizontal filter chips for sort modes, scrollable */}
+        <FlatList
+          data={SORT_OPTIONS}
           horizontal
           showsHorizontalScrollIndicator={false}
-          sections={[{ title: '', data: SORT_OPTIONS }]}
           keyExtractor={item => item.key}
-          renderSectionHeader={() => null}
           renderItem={({ item }) => (
             <Chip
-              key={item.key}
               label={item.label}
               active={sort === item.key}
-              onPress={() => setSort(item.key as typeof sort)}
+              onPress={() => setSort(item.key)}
               style={styles.chip}
             />
           )}
           contentContainerStyle={styles.chipRow}
-          style={{ maxHeight: 48, minHeight: 40 }}
         />
       </View>
 
@@ -116,9 +127,9 @@ export default function SongsScreen() {
               })}
             />
           )}
-          contentContainerStyle={grouped.length === 0 ? styles.emptyList : { paddingBottom: Platform.OS === 'ios' ? 32 : 16 }}
+          contentContainerStyle={grouped.length === 0 ? styles.emptyList : styles.songList}
           ListEmptyComponent={<EmptyState title="No songs found." />}
-          stickySectionHeadersEnabled={false}
+          stickySectionHeadersEnabled={true}
           showsVerticalScrollIndicator={false}
         />
       )}
@@ -135,8 +146,14 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 0,
   },
+  titleSmall: {
+    fontSize: 28,
+  },
   subtitle: {
     marginBottom: 16,
+  },
+  subtitleSmall: {
+    fontSize: 14,
   },
   searchBar: {
     marginBottom: 12,
@@ -154,6 +171,7 @@ const styles = StyleSheet.create({
   chip: {
     marginRight: 4,
     minWidth: 72,
+    borderRadius: 20,
   },
   sectionHeader: {
     marginTop: 16,
@@ -165,5 +183,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 200,
+  },
+  songList: {
+    paddingBottom: Platform.OS === 'ios' ? 32 : 16,
   },
 });
