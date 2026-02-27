@@ -6,14 +6,6 @@ import type { ArtistsStackParamList } from '@/app/navigationTypes';
 
 type Props = NativeStackScreenProps<ArtistsStackParamList, 'ArtistDetail'>;
 
-/**
- * Artist Detail Screen — stub.
- *
- * Sprint 2 Tasks:
- *  - S2-04: Display artist header (avatar, name, song count)
- *  - S2-05: List artist's songs using SongRow
- *  - S2-06: Navigate to LyricsScreen on song tap
- */
 export default function ArtistDetailScreen({ route }: Props) {
   const { artistId, artistName } = route.params;
 
