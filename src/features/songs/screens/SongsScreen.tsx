@@ -135,10 +135,7 @@ export default function SongsScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: undefined,
-  },
+  
   title: {
     marginTop: 8,
     marginBottom: 0,
