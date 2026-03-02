@@ -66,7 +66,7 @@ export default function SongsScreen() {
   }, [filteredSongs]);
 
   return (
-    <AppScreen style={[styles.screen, { paddingHorizontal: width * 0.04 }]}> {/* 4% padding */}
+    <AppScreen style={{ flex: 1, paddingHorizontal: width * 0.04 }}> {/* 4% padding */}
       <AppText variant="pageTitle" style={[styles.title, isSmallScreen && styles.titleSmall]}> 
         Songs
       </AppText>
