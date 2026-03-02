@@ -7,26 +7,27 @@ import { groupByInitial } from '@/utils/groupers';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { SongsStackParamList } from '@/app/navigationTypes';
+import type { SongSortMode } from '@/types';
 
 /**
  * Songs Browse Screen — stub.
  *
  * Sprint 2 Tasks:
  *  - S2-07: Render song list using FlashList + SongRow
- *  - S2-08: Sort chips (Title / Artist / Recent / Popular)
+ *  - S2-08: Sort chips (A-Z / Popular / Recent / Genre)
  *  - S2-09: Navigate to LyricsScreen on tap
  */
 
 /**
  * Supported sort modes for SongsScreen
  */
-type SongSortKey = 'title' | 'artist' | 'recent' | 'popular';
+type SongSortKey = SongSortMode;
 
 const SORT_OPTIONS: { key: SongSortKey; label: string }[] = [
   { key: 'title', label: 'A-Z' },
-  { key: 'artist', label: 'Artist' },
   { key: 'popular', label: 'Popular' },
   { key: 'recent', label: 'Recent' },
+  { key: 'genre', label: 'Genre' },
 ];
 
 
@@ -63,10 +64,6 @@ export default function SongsScreen() {
       .sort()
       .map(letter => ({ title: letter, data: groupedObj[letter] }));
   }, [filteredSongs]);
-
-  // Responsive font scaling for title/subtitle
-  const titleFontSize = isSmallScreen ? 28 : undefined;
-  const subtitleFontSize = isSmallScreen ? 14 : undefined;
 
   return (
     <AppScreen style={[styles.screen, { paddingHorizontal: width * 0.04 }]}> {/* 4% padding */}
