@@ -3,9 +3,10 @@ import { View, StyleSheet, ScrollView, Share } from 'react-native';
 import { AppScreen, AppText, AppButton } from '@/components';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { SongsStackParamList } from '@/app/navigationTypes';
-import { useLyrics } from '@/hooks/queries/useLyrics';
+import { useLyrics } from '../hooks/useLyrics';
 import { useSavedStore } from '@/store/savedStore';
-import type { SavedLyric, LyricsTextSize } from '@/types/models';
+import type { SavedLyric } from '@/types/models';
+import type { LyricsTextSize } from '../types';
 import { fontSize } from '@/theme/typography';
 
 type Props = NativeStackScreenProps<SongsStackParamList, 'Lyrics'>;
@@ -68,7 +69,7 @@ export default function LyricsScreen({ navigation, route }: Props) {
     try {
       await Share.share({ message: text, title: lyrics.songTitle });
     } catch (e) {
-      // no-op
+      // ignore
     }
   };
 
