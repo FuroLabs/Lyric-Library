@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, ScrollView, Share } from 'react-native';
+import { View, StyleSheet, ScrollView, Share, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { AppScreen, AppText, AppButton } from '@/components';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { SongsStackParamList } from '@/app/navigationTypes';
@@ -37,6 +38,7 @@ export default function LyricsScreen({ navigation, route }: Props) {
 
   const handleToggleSave = () => {
     if (!lyrics) return;
+
     if (isSaved) {
       removeLyric(songId);
       return;
@@ -60,6 +62,7 @@ export default function LyricsScreen({ navigation, route }: Props) {
 
   const handleShare = async () => {
     if (!lyrics) return;
+
     const text = [
       `${lyrics.songTitle} — ${lyrics.artistName}`,
       '',
@@ -67,10 +70,11 @@ export default function LyricsScreen({ navigation, route }: Props) {
     ].join('\n');
 
     try {
-      await Share.share({ message: text, title: lyrics.songTitle });
-    } catch (e) {
-      // ignore
-    }
+      await Share.share({
+        message: text,
+        title: lyrics.songTitle,
+      });
+    } catch (e) {}
   };
 
   const handleCycleTextSize = () => {
@@ -81,67 +85,114 @@ export default function LyricsScreen({ navigation, route }: Props) {
 
   return (
     <AppScreen>
+
+      {/* Header */}
       <View style={styles.headerRow}>
-        <AppButton label="Back" variant="tertiary" onPress={() => navigation.goBack()} />
-        <View style={styles.headerMeta}>
-          <AppText variant="sectionTitle">{lyrics?.songTitle ?? songTitle}</AppText>
-          <AppText variant="itemMeta">{lyrics?.artistName ?? artistName}{lyrics?.albumTitle ? ` · ${lyrics.albumTitle}` : ''}</AppText>
+
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="chevron-back" size={28} color="black" />
+        </TouchableOpacity>
+
+        <View style={styles.headerText}>
+          <AppText variant="sectionTitle">
+            {lyrics?.songTitle ?? songTitle}
+          </AppText>
+
+          <AppText variant="itemMeta">
+            {lyrics?.artistName ?? artistName}
+            {lyrics?.albumTitle ? ` · ${lyrics.albumTitle}` : ''}
+          </AppText>
         </View>
+
       </View>
 
+      {/* Action Buttons */}
       <View style={styles.actionsRow}>
-        <AppButton label={isSaved ? 'Saved' : 'Save'} variant="primary" onPress={handleToggleSave} />
-        <AppButton label="Share" variant="secondary" onPress={handleShare} />
-        <AppButton label={`Text: ${textSize}`} variant="tertiary" onPress={handleCycleTextSize} />
+        <AppButton
+          label={isSaved ? 'Saved' : 'Save'}
+          variant="primary"
+          onPress={handleToggleSave}
+        />
+
+        <AppButton
+          label="Share"
+          variant="secondary"
+          onPress={handleShare}
+        />
+
+        <AppButton
+          label={`Text Size`}
+          variant="tertiary"
+          onPress={handleCycleTextSize}
+        />
       </View>
 
+      {/* Lyrics */}
       {isLoading ? (
         <AppText variant="pageSubtitle">Loading lyrics…</AppText>
       ) : (
-        <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
+        >
           {lyrics?.sections.map((section, idx) => (
             <View key={`${section.label}-${idx}`} style={styles.section}>
-              <AppText variant="verseLabel">{section.label}</AppText>
+
+              <AppText variant="verseLabel">
+                {section.label}
+              </AppText>
+
               {section.lines.map((line, li) => (
                 <AppText
                   key={`line-${li}`}
                   variant="lyricLine"
-                  style={{ fontSize: fontSize.lg * lyricFontScale, marginTop: 6 }}
+                  style={{
+                    fontSize: fontSize.lg * lyricFontScale,
+                    marginTop: 6,
+                  }}
                 >
                   {line}
                 </AppText>
               ))}
+
             </View>
           ))}
         </ScrollView>
       )}
+
     </AppScreen>
   );
 }
 
 const styles = StyleSheet.create({
+
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    marginBottom: 8,
+    marginBottom: 10,
   },
-  headerMeta: {
-    flex: 1,
+
+  headerText: {
+    marginLeft: 10,
   },
+
   actionsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 12,
   },
+
   scroll: {
     flex: 1,
   },
+
   scrollContent: {
     paddingBottom: 40,
   },
+
   section: {
     marginBottom: 18,
   },
+
 });

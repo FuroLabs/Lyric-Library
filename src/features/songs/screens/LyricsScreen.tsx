@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, ScrollView, Share } from 'react-native';
+import { View, StyleSheet, ScrollView, Share, TouchableOpacity } from 'react-native';
 import { AppScreen, AppText, AppButton } from '@/components';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { SongsStackParamList } from '@/app/navigationTypes';
@@ -7,6 +7,7 @@ import { useLyrics } from '@/hooks/queries/useLyrics';
 import { useSavedStore } from '@/store/savedStore';
 import type { SavedLyric, LyricsTextSize } from '@/types/models';
 import { fontSize } from '@/theme/typography';
+import { Ionicons } from '@expo/vector-icons'; 
 
 type Props = NativeStackScreenProps<SongsStackParamList, 'Lyrics'>;
 
@@ -25,12 +26,9 @@ export default function LyricsScreen({ navigation, route }: Props) {
 
   const lyricFontScale = useMemo(() => {
     switch (textSize) {
-      case 'small':
-        return 0.9;
-      case 'large':
-        return 1.25;
-      default:
-        return 1;
+      case 'small': return 0.9;
+      case 'large': return 1.25;
+      default: return 1;
     }
   }, [textSize]);
 
@@ -41,8 +39,7 @@ export default function LyricsScreen({ navigation, route }: Props) {
       return;
     }
 
-    const previewText =
-      lyrics.sections?.[0]?.lines?.slice(0, 2).join(' ') ?? songTitle;
+    const previewText = lyrics.sections?.[0]?.lines?.slice(0, 2).join(' ') ?? songTitle;
 
     const entry: SavedLyric = {
       lyricId: `lyric-${songId}`,
@@ -67,9 +64,7 @@ export default function LyricsScreen({ navigation, route }: Props) {
 
     try {
       await Share.share({ message: text, title: lyrics.songTitle });
-    } catch (e) {
-      // no-op
-    }
+    } catch (e) { /* no-op */ }
   };
 
   const handleCycleTextSize = () => {
@@ -79,33 +74,74 @@ export default function LyricsScreen({ navigation, route }: Props) {
   };
 
   return (
-    <AppScreen>
-      <View style={styles.headerRow}>
-        <AppButton label="Back" variant="tertiary" onPress={() => navigation.goBack()} />
-        <View style={styles.headerMeta}>
-          <AppText variant="sectionTitle">{lyrics?.songTitle ?? songTitle}</AppText>
-          <AppText variant="itemMeta">{lyrics?.artistName ?? artistName}{lyrics?.albumTitle ? ` · ${lyrics.albumTitle}` : ''}</AppText>
-        </View>
+    <AppScreen style={styles.container}>
+      {/* Back Icon Button */}
+      <TouchableOpacity 
+        onPress={() => navigation.goBack()} 
+        style={styles.backIconButton}
+      >
+        <Ionicons name="chevron-back" size={28} color="#000" />
+      </TouchableOpacity>
+
+      {/* Left Aligned Header */}
+      <View style={styles.headerMeta}>
+        <AppText variant="sectionTitle" style={styles.titleText}>
+          {lyrics?.songTitle ?? songTitle}
+        </AppText>
+        <AppText variant="itemMeta" style={styles.subtitleText}>
+          {lyrics?.artistName ?? artistName}
+          {lyrics?.albumTitle ? ` · ${lyrics.albumTitle}` : ''}
+        </AppText>
       </View>
 
+      {/* Action Buttons Row */}
       <View style={styles.actionsRow}>
-        <AppButton label={isSaved ? 'Saved' : 'Save'} variant="primary" onPress={handleToggleSave} />
-        <AppButton label="Share" variant="secondary" onPress={handleShare} />
-        <AppButton label={`Text: ${textSize}`} variant="tertiary" onPress={handleCycleTextSize} />
+        <AppButton 
+          label={isSaved ? 'Saved' : 'Save'} 
+          variant="primary" 
+          onPress={handleToggleSave} 
+          style={styles.flexBtn}
+        />
+        <AppButton 
+          label="Share" 
+          variant="secondary" 
+          onPress={handleShare} 
+          style={styles.flexBtn}
+        />
+        <AppButton 
+          label="Text Size" 
+          variant="tertiary" 
+          onPress={handleCycleTextSize} 
+          style={styles.flexBtn}
+        />
       </View>
+
+      {/* Separator Line */}
+      <View style={styles.separator} />
 
       {isLoading ? (
         <AppText variant="pageSubtitle">Loading lyrics…</AppText>
       ) : (
-        <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+        <ScrollView 
+          showsVerticalScrollIndicator={true}
+          style={styles.scroll} 
+          contentContainerStyle={styles.scrollContent}
+        >
           {lyrics?.sections.map((section, idx) => (
             <View key={`${section.label}-${idx}`} style={styles.section}>
-              <AppText variant="verseLabel">{section.label}</AppText>
+              <AppText variant="verseLabel" style={styles.verseLabel}>
+                {section.label.toUpperCase()}
+              </AppText>
               {section.lines.map((line, li) => (
                 <AppText
                   key={`line-${li}`}
                   variant="lyricLine"
-                  style={{ fontSize: fontSize.lg * lyricFontScale, marginTop: 6 }}
+                  style={{ 
+                    fontSize: fontSize.lg * lyricFontScale, 
+                    lineHeight: (fontSize.lg * lyricFontScale) * 1.5,
+                    marginTop: 8,
+                    color: '#333'
+                  }}
                 >
                   {line}
                 </AppText>
@@ -119,28 +155,63 @@ export default function LyricsScreen({ navigation, route }: Props) {
 }
 
 const styles = StyleSheet.create({
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    marginBottom: 8,
+  container: {
+    backgroundColor: '#FDFBF4',
+    paddingHorizontal: 20,
+    flex: 1, // Ensures it takes up the full screen height
+  },
+  backIconButton: {
+    marginTop: 10,
+    marginLeft: -10,
+    padding: 10,
   },
   headerMeta: {
-    flex: 1,
+    alignItems: 'flex-start',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  titleText: {
+    fontSize: 34,
+    fontWeight: '700',
+    fontFamily: 'serif',
+    color: '#1a1a1a',
+  },
+  subtitleText: {
+    fontSize: 18,
+    color: '#666',
+    marginTop: 4,
   },
   actionsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: 12,
+    gap: 12,
+    marginBottom: 16,
+  },
+  flexBtn: {
+    flex: 1,
+    borderRadius: 12,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#E5E5E5',
+    width: '100%',
+    marginBottom: 20,
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 40,
+    paddingBottom: 40, // Keeps content from hitting the bottom of the screen
   },
   section: {
-    marginBottom: 18,
+    marginBottom: 30,
+  },
+  verseLabel: {
+    color: '#999',
+    letterSpacing: 1.2,
+    fontSize: 13,
+    fontWeight: '600',
+    marginBottom: 10,
   },
 });
