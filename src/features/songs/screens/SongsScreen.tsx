@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppScreen, AppText, AppButton } from '@/components';
 import type { SongsStackParamList } from '@/app/navigationTypes';

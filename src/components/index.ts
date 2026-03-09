@@ -10,3 +10,4 @@ export { ArtistCard } from './composite/ArtistCard';
 export { SongRow } from './composite/SongRow';
 export { ResultRow } from './composite/ResultRow';
 export { LoadingState, EmptyState, ErrorState } from './composite/StateViews';
+export { LyricsContent } from './composite/LyricsContent';
