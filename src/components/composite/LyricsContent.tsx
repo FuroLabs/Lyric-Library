@@ -28,6 +28,16 @@ export function LyricsContent({
     }
   }, [textSize]);
 
+  const getLineStyle = React.useCallback((v: typeof variant, scale: number) => {
+    if (v === 'styled') {
+      return [
+        styles.lyricLineStyled,
+        { fontSize: fontSize.lg * scale, lineHeight: (fontSize.lg * scale) * 1.5 },
+      ];
+    }
+    return [styles.lyricLine, { fontSize: fontSize.lg * scale }];
+  }, []);
+
   if (isLoading) {
     return <AppText variant="pageSubtitle">Loading lyrics…</AppText>;
   }
@@ -50,13 +60,7 @@ export function LyricsContent({
             <AppText
               key={`line-${li}`}
               variant="lyricLine"
-              style={[
-                variant === 'styled' ? styles.lyricLineStyled : styles.lyricLine,
-                { 
-                  fontSize: fontSize.lg * lyricFontScale,
-                  ...(variant === 'styled' ? { lineHeight: (fontSize.lg * lyricFontScale) * 1.5 } : {})
-                }
-              ]}
+              style={getLineStyle(variant, lyricFontScale)}
             >
               {line}
             </AppText>
