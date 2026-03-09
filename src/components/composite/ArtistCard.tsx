@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { Pressable, View, StyleSheet } from 'react-native';
-import { colors, spacing, radii, shadows } from '@/theme';
+import { Pressable, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors, spacing, radii, shadows, gradients } from '@/theme';
 import { AppText } from '../primitives/AppText';
 
 interface ArtistCardProps {
@@ -26,7 +27,11 @@ export const ArtistCard = memo(function ArtistCard({
   initial,
   alternateGradient = false,
   onPress,
-}: ArtistCardProps) {
+}: Readonly<ArtistCardProps>) {
+  const selectedGradient = alternateGradient
+    ? gradients.gradient2
+    : gradients.gradient1;
+
   return (
     <Pressable
       onPress={onPress}
@@ -34,20 +39,20 @@ export const ArtistCard = memo(function ArtistCard({
       accessibilityRole="button"
       accessibilityLabel={`${name}, ${songCount} songs`}
     >
-      <View
-        style={[
-          styles.avatar,
-          alternateGradient ? styles.avatarAlt : styles.avatarDefault,
-        ]}
+      <LinearGradient
+        colors={[...selectedGradient.colors]}
+        start={selectedGradient.start}
+        end={selectedGradient.end}
+        style={styles.avatar}
       >
         <AppText variant="avatarLetterSmall" color={colors.white}>
           {initial}
         </AppText>
-      </View>
+      </LinearGradient>
       <AppText variant="cardTitle" center numberOfLines={1}>
         {name}
       </AppText>
-      <AppText variant="cardCaption" center>
+      <AppText variant="cardCaption" center numberOfLines={1}>
         {songCount} songs
       </AppText>
     </Pressable>
@@ -56,13 +61,17 @@ export const ArtistCard = memo(function ArtistCard({
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
+    aspectRatio: 0.85,
     backgroundColor: colors.bgElevated,
     borderRadius: radii.xl,
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.md,
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 2,
     borderColor: colors.border,
+    margin: spacing.xs,
     ...shadows.card,
   },
   pressed: {
@@ -76,13 +85,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: spacing.sm + 2,
-  },
-  avatarDefault: {
-    // gradient1 solid fallback (interns can replace with LinearGradient)
-    backgroundColor: colors.primary,
-  },
-  avatarAlt: {
-    // gradient2 solid fallback
-    backgroundColor: colors.accent,
   },
 });

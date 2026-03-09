@@ -21,7 +21,7 @@ interface ChipProps {
  * Usage:
  *   <Chip label="A-Z" active={sort === 'a-z'} onPress={() => setSort('a-z')} />
  */
-export function Chip({ label, active = false, onPress, style }: ChipProps) {
+export function Chip({ label, active = false, onPress, style }: Readonly<ChipProps>) {
   return (
     <Pressable
       onPress={onPress}
@@ -47,10 +47,14 @@ export function Chip({ label, active = false, onPress, style }: ChipProps) {
 
 const styles = StyleSheet.create({
   base: {
-    paddingVertical: spacing.sm + 2,
-    paddingHorizontal: spacing.xl - 2,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.lg,
     borderRadius: radii.pill,
     borderWidth: 2,
+    minWidth: 72,
+    minHeight: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   active: {
     backgroundColor: colors.primary,
