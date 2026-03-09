@@ -12,6 +12,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 export type ArtistsStackParamList = {
   ArtistsList: undefined;
   ArtistDetail: { artistId: string; artistName: string };
+  AlbumDetail: { albumId: string; albumName: string; artistId: string; artistName: string };
   Lyrics: { songId: string; songTitle: string; artistName: string };
 };
 

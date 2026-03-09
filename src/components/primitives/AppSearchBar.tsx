@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Pressable } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import { colors, spacing, radii, shadows, textVariants } from '@/theme';
 
 interface AppSearchBarProps {
@@ -30,14 +31,11 @@ export function AppSearchBar({
   active = false,
   onFocus,
   onBlur,
-}: AppSearchBarProps) {
+}: Readonly<AppSearchBarProps>) {
   return (
     <View style={[styles.container, active ? styles.containerActive : styles.containerInactive]}>
-      {/* Search icon (simple circle + line) */}
-      <View style={styles.iconWrapper}>
-        <View style={styles.searchCircle} />
-        <View style={styles.searchHandle} />
-      </View>
+      {/* Search icon */}
+      <Feather name="search" size={18} color={colors.textTertiary} />
 
       <TextInput
         style={styles.input}
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgElevated,
   },
   containerInactive: {
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: colors.border,
     ...shadows.card,
   },
@@ -89,27 +87,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     ...shadows.searchActive,
   },
-  iconWrapper: {
-    width: 18,
-    height: 18,
-    position: 'relative',
-  },
-  searchCircle: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    borderWidth: 2,
-    borderColor: colors.textTertiary,
-  },
-  searchHandle: {
-    position: 'absolute',
-    bottom: -1,
-    right: -1,
-    width: 7,
-    height: 2,
-    backgroundColor: colors.textTertiary,
-    transform: [{ rotate: '-45deg' }],
-  },
+
   input: {
     flex: 1,
     ...textVariants.searchInput,

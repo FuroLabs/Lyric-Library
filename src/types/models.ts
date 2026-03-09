@@ -63,8 +63,21 @@ export interface SearchResult {
   referenceId: string;
 }
 
+export interface ArtistsQueryParams {
+  query?: string;
+  startsWith?: string;
+}
+
+export interface SongsQueryParams {
+  sort?: SongSortMode;
+  query?: string;
+  artistId?: string;
+  albumId?: string;
+  genre?: string;
+}
+
 /** Filter/sort options for Songs list */
-export type SongSortMode = 'title' | 'artist' | 'recent' | 'popular';
+export type SongSortMode = 'title' | 'genre' | 'recent' | 'popular';
 
 /** Filter tabs for Search */
 export type SearchFilterType = 'all' | 'song' | 'artist' | 'album' | 'lyrics';

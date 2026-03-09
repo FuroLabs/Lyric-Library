@@ -1,38 +1,215 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { AppScreen, AppText } from '@/components';
+import React, { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AppScreen, AppText, SongRow, LoadingState, ErrorState } from '@/components';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ArtistsStackParamList } from '@/app/navigationTypes';
+import { useArtistById, type Song, type Album } from '../hooks/useArtistById';
+import { colors, gradients, spacing, radii, shadows } from '@/theme';
 
-type Props = NativeStackScreenProps<ArtistsStackParamList, 'ArtistDetail'>;
+type Props = Readonly<NativeStackScreenProps<ArtistsStackParamList, 'ArtistDetail'>>;
 
-/**
- * Artist Detail Screen — stub.
- *
- * Sprint 2 Tasks:
- *  - S2-04: Display artist header (avatar, name, song count)
- *  - S2-05: List artist's songs using SongRow
- *  - S2-06: Navigate to LyricsScreen on song tap
- */
-export default function ArtistDetailScreen({ route }: Props) {
-  const { artistId, artistName } = route.params;
-
+function SectionHeader({ label }: Readonly<{ label: string }>) {
   return (
-    <AppScreen>
-      <AppText variant="pageTitle">{artistName}</AppText>
-      <View style={styles.placeholder}>
-        <AppText variant="pageSubtitle">
-          🎵  Artist detail for &quot;{artistName}&quot; (ID: {artistId}) — Sprint 2
+    <AppText variant="sectionHeader" style={styles.sectionHeader}>
+      {label}
+    </AppText>
+  );
+}
+
+function AlbumRow({
+  album,
+  onPress,
+}: Readonly<{
+  album: Album;
+  onPress: () => void;
+}>) {
+  return (
+    <Pressable onPress={onPress} style={({ pressed }) => [styles.albumRow, pressed && styles.pressed]}>
+      <View style={styles.albumInfo}>
+        <AppText variant="itemTitle">{album.name}</AppText>
+        <AppText variant="itemMeta" color={colors.textTertiary}>
+          {album.songCount} songs • {album.year}
         </AppText>
       </View>
+
+      <View style={styles.browsePill}>
+        <AppText variant="actionLabel" color={colors.primary}>
+          Browse
+        </AppText>
+      </View>
+    </Pressable>
+  );
+}
+
+export default function ArtistDetailScreen({ route, navigation }: Props) {
+  const { artistId, artistName } = route.params;
+  const { data: artist, isLoading, isError, refetch } = useArtistById(artistId);
+
+  useFocusEffect(
+    useCallback(() => {
+      const parent = navigation.getParent();
+      parent?.setOptions({ tabBarStyle: { display: 'none' } });
+      return () => parent?.setOptions({ tabBarStyle: undefined });
+    }, [navigation]),
+  );
+
+  const handleSongPress = (song: Song) => {
+    navigation.navigate('Lyrics', {
+      songId: song.id,
+      songTitle: song.title,
+      artistName: artist?.name ?? artistName,
+    });
+  };
+
+  const handleAlbumPress = (album: Album) => {
+    navigation.navigate('AlbumDetail', {
+      albumId: album.id,
+      albumName: album.name,
+      artistId,
+      artistName: artist?.name ?? artistName,
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <AppScreen>
+        <LoadingState message="Loading artist profile..." />
+      </AppScreen>
+    );
+  }
+
+  if (isError || !artist) {
+    return (
+      <AppScreen>
+        <ErrorState message="Could not load artist." onRetry={refetch} />
+      </AppScreen>
+    );
+  }
+
+  return (
+    <AppScreen style={styles.screen}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+      >
+        <AppText variant="pageSubtitle" style={styles.backChevron}>
+          ‹
+        </AppText>
+      </TouchableOpacity>
+
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator>
+        <View style={styles.header}>
+          <LinearGradient
+            colors={[...gradients.gradient1.colors]}
+            start={gradients.gradient1.start}
+            end={gradients.gradient1.end}
+            style={styles.avatar}
+          >
+            <AppText variant="avatarLetter" color={colors.white}>
+              {artist.name.charAt(0).toUpperCase()}
+            </AppText>
+          </LinearGradient>
+
+          <AppText variant="detailTitle" center>
+            {artist.name}
+          </AppText>
+          <AppText variant="pageSubtitle" center>
+            {artist.songCount} songs available
+          </AppText>
+        </View>
+
+        <SectionHeader label="POPULAR SONGS" />
+        {artist.popularSongs.map((song) => (
+          <SongRow
+            key={song.id}
+            title={song.title}
+            meta={`${song.album} • ${song.year}`}
+            onPress={() => handleSongPress(song)}
+          />
+        ))}
+
+        <SectionHeader label="ALBUMS" />
+        {artist.albums.map((album) => (
+          <AlbumRow key={album.id} album={album} onPress={() => handleAlbumPress(album)} />
+        ))}
+
+        <View style={styles.bottomPad} />
+      </ScrollView>
     </AppScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  placeholder: {
-    flex: 1,
+  screen: {
+    backgroundColor: colors.bgPrimary,
+  },
+  backButton: {
+    position: 'absolute',
+    top: spacing.lg,
+    left: spacing.lg,
+    zIndex: 10,
+    width: 36,
+    height: 36,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backChevron: {
+    fontSize: 30,
+    lineHeight: 32,
+    color: colors.textPrimary,
+  },
+  scrollContent: {
+    paddingHorizontal: spacing.xl,
+    paddingBottom: spacing.xxxl,
+  },
+  header: {
+    alignItems: 'center',
+    paddingTop: spacing.huge,
+    paddingBottom: spacing.xxl,
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: radii.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.lg,
+    ...shadows.avatarGlow,
+  },
+  sectionHeader: {
+    marginTop: spacing.md,
+    marginBottom: spacing.md,
+  },
+  albumRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.bgElevated,
+    borderRadius: radii.lg,
+    borderWidth: 2,
+    borderColor: colors.border,
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.sm,
+    ...shadows.card,
+  },
+  albumInfo: {
+    flex: 1,
+    marginRight: spacing.md,
+  },
+  browsePill: {
+    paddingVertical: spacing.s,
+    paddingHorizontal: spacing.md,
+    borderRadius: radii.sm,
+    backgroundColor: colors.primaryLight,
+  },
+  pressed: {
+    opacity: 0.85,
+  },
+  bottomPad: {
+    height: spacing.xl,
   },
 });
