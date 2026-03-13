@@ -1,30 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import artistsJson from '@/data/mock/artists.json';
 import songsJson   from '@/data/mock/songs.json';
+import type { Song, Artist, Album } from '@/types';
 import type { UseSearchParams, UseSearchReturn, SearchResults } from '../types';
 
-// ─── Mock data interfaces ─────────────────────────────────────────────────────
-interface MockAlbumItem {
-  id: string;
-  title: string;
-  artistName: string;
-  artistId: string;
-  songCount: number;
-}
-
-interface MockSongItem {
-  id: string;
-  title: string;
-  artistName: string;
-  albumTitle: string;
-}
-
-interface MockArtistItem {
-  id: string;
-  name: string;
-  songCount: number;
-  albums: MockAlbumItem[];
-}
+// ─── Typed mock data ──────────────────────────────────────────────────────────
+const rawSongs    = songsJson    as unknown as Song[];
+const rawArtists  = artistsJson  as unknown as Artist[];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function normalize(s: string) {
@@ -37,7 +19,7 @@ function searchMockData(query: string, type: UseSearchParams['type']): SearchRes
   const songs =
     type === 'artists' || type === 'albums'
       ? []
-      : (songsJson as MockSongItem[]).filter(
+      : rawSongs.filter(
           (s) =>
             normalize(s.title).includes(q) ||
             normalize(s.artistName).includes(q) ||
@@ -47,12 +29,12 @@ function searchMockData(query: string, type: UseSearchParams['type']): SearchRes
   const artists =
     type === 'songs' || type === 'albums'
       ? []
-      : (artistsJson as MockArtistItem[]).filter((a) => normalize(a.name).includes(q));
+      : rawArtists.filter((a) => normalize(a.name).includes(q));
 
-  const albums =
+  const albums: Album[] =
     type === 'songs' || type === 'artists'
       ? []
-      : (artistsJson as MockArtistItem[])
+      : rawArtists
           .flatMap((a) => a.albums)
           .filter(
             (al) =>
