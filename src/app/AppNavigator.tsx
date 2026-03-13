@@ -13,29 +13,28 @@ import type {
 } from './navigationTypes';
 
 // ─── Screen Imports ──────────────────────────────────────────────
-// Stub screens — interns will flesh these out in Sprint 2 & 3
-import ArtistsScreen from '@/features/artists/screens/ArtistsScreen';
+import ArtistsScreen      from '@/features/artists/screens/ArtistsScreen';
 import ArtistDetailScreen from '@/features/artists/screens/ArtistDetailScreen';
-import AlbumDetailScreen from '@/features/artists/screens/AlbumDetailScreen';
-import SongsScreen from '@/features/songs/screens/SongsScreen';
-import LyricsScreen from '@/features/songs/screens/LyricsScreen';
-import SearchScreen from '@/features/search/screens/SearchScreen';
-import SavedScreen from '@/features/saved/screens/SavedScreen';
+import AlbumDetailScreen  from '@/features/artists/screens/AlbumDetailScreen';
+import SongsScreen        from '@/features/songs/screens/SongsScreen';
+import LyricsScreen       from '@/features/songs/screens/LyricsScreen';
+import SearchScreen       from '@/features/search/screens/SearchScreen';
+import SavedScreen        from '@/features/saved/screens/SavedScreen';
 
 // ─── Stack Navigators ────────────────────────────────────────────
 
 const ArtistsStack = createNativeStackNavigator<ArtistsStackParamList>();
-const SongsStack = createNativeStackNavigator<SongsStackParamList>();
-const SearchStack = createNativeStackNavigator<SearchStackParamList>();
-const SavedStack = createNativeStackNavigator<SavedStackParamList>();
+const SongsStack   = createNativeStackNavigator<SongsStackParamList>();
+const SearchStack  = createNativeStackNavigator<SearchStackParamList>();
+const SavedStack   = createNativeStackNavigator<SavedStackParamList>();
 
 function ArtistsStackNavigator() {
   return (
     <ArtistsStack.Navigator screenOptions={{ headerShown: false }}>
-      <ArtistsStack.Screen name="ArtistsList" component={ArtistsScreen} />
+      <ArtistsStack.Screen name="ArtistsList"  component={ArtistsScreen} />
       <ArtistsStack.Screen name="ArtistDetail" component={ArtistDetailScreen} />
-      <ArtistsStack.Screen name="AlbumDetail" component={AlbumDetailScreen} />
-      <ArtistsStack.Screen name="Lyrics" component={LyricsScreen} />
+      <ArtistsStack.Screen name="AlbumDetail"  component={AlbumDetailScreen} />
+      <ArtistsStack.Screen name="Lyrics"       component={LyricsScreen} />
     </ArtistsStack.Navigator>
   );
 }
@@ -44,7 +43,7 @@ function SongsStackNavigator() {
   return (
     <SongsStack.Navigator screenOptions={{ headerShown: false }}>
       <SongsStack.Screen name="SongsList" component={SongsScreen} />
-      <SongsStack.Screen name="Lyrics" component={LyricsScreen} />
+      <SongsStack.Screen name="Lyrics"    component={LyricsScreen} />
     </SongsStack.Navigator>
   );
 }
@@ -52,9 +51,10 @@ function SongsStackNavigator() {
 function SearchStackNavigator() {
   return (
     <SearchStack.Navigator screenOptions={{ headerShown: false }}>
-      <SearchStack.Screen name="SearchMain" component={SearchScreen} />
+      <SearchStack.Screen name="SearchMain"   component={SearchScreen} />
       <SearchStack.Screen name="ArtistDetail" component={ArtistDetailScreen} />
-      <SearchStack.Screen name="Lyrics" component={LyricsScreen} />
+      <SearchStack.Screen name="AlbumDetail"  component={AlbumDetailScreen} />
+      <SearchStack.Screen name="Lyrics"       component={LyricsScreen} />
     </SearchStack.Navigator>
   );
 }
@@ -63,7 +63,7 @@ function SavedStackNavigator() {
   return (
     <SavedStack.Navigator screenOptions={{ headerShown: false }}>
       <SavedStack.Screen name="SavedList" component={SavedScreen} />
-      <SavedStack.Screen name="Lyrics" component={LyricsScreen} />
+      <SavedStack.Screen name="Lyrics"    component={LyricsScreen} />
     </SavedStack.Navigator>
   );
 }
@@ -106,34 +106,10 @@ export function AppNavigator() {
         tabBarIcon: renderTabIcon,
       }}
     >
-      <Tab.Screen
-        name="ArtistsTab"
-        component={ArtistsStackNavigator}
-        options={{
-          tabBarLabel: 'Artists',
-        }}
-      />
-      <Tab.Screen
-        name="SongsTab"
-        component={SongsStackNavigator}
-        options={{
-          tabBarLabel: 'Songs',
-        }}
-      />
-      <Tab.Screen
-        name="SearchTab"
-        component={SearchStackNavigator}
-        options={{
-          tabBarLabel: 'Search',
-        }}
-      />
-      <Tab.Screen
-        name="SavedTab"
-        component={SavedStackNavigator}
-        options={{
-          tabBarLabel: 'Saved',
-        }}
-      />
+      <Tab.Screen name="ArtistsTab" component={ArtistsStackNavigator} options={{ tabBarLabel: 'Artists' }} />
+      <Tab.Screen name="SongsTab"   component={SongsStackNavigator}   options={{ tabBarLabel: 'Songs' }} />
+      <Tab.Screen name="SearchTab"  component={SearchStackNavigator}  options={{ tabBarLabel: 'Search' }} />
+      <Tab.Screen name="SavedTab"   component={SavedStackNavigator}   options={{ tabBarLabel: 'Saved' }} />
     </Tab.Navigator>
   );
 }

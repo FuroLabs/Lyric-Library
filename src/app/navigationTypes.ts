@@ -24,6 +24,7 @@ export type SongsStackParamList = {
 export type SearchStackParamList = {
   SearchMain: undefined;
   ArtistDetail: { artistId: string; artistName: string };
+  AlbumDetail: { albumId: string; albumName: string; artistId: string; artistName: string };
   Lyrics: { songId: string; songTitle: string; artistName: string };
 };
 
@@ -36,14 +37,13 @@ export type SavedStackParamList = {
 
 export type RootTabParamList = {
   ArtistsTab: NavigatorScreenParams<ArtistsStackParamList>;
-  SongsTab: NavigatorScreenParams<SongsStackParamList>;
-  SearchTab: NavigatorScreenParams<SearchStackParamList>;
-  SavedTab: NavigatorScreenParams<SavedStackParamList>;
+  SongsTab:   NavigatorScreenParams<SongsStackParamList>;
+  SearchTab:  NavigatorScreenParams<SearchStackParamList>;
+  SavedTab:   NavigatorScreenParams<SavedStackParamList>;
 };
 
 // ─── Convenience types ──────────────────────────────────────────
 
-/** All possible route names across the app */
 export type AllRouteNames =
   | keyof ArtistsStackParamList
   | keyof SongsStackParamList
