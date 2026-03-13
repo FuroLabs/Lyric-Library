@@ -192,7 +192,7 @@ function NoResultsState({ query }: { query: string }) {
     <View style={styles.stateWrap}>
       <Icon name="search" size={40} color={colors.textTertiary} />
       <AppText variant="pageSubtitle" style={styles.stateTitle}>
-        No results for "{query}"
+        {`No results for "${query}"`}
       </AppText>
       <AppText variant="itemMeta" color={colors.textTertiary} style={styles.stateSub}>
         Try a different search term or filter
@@ -282,6 +282,9 @@ export default function SearchScreen({ navigation }: SearchScreenProps) {
               style={[styles.pill, active && styles.pillActive]}
               onPress={() => setActiveFilter(f.value)}
               activeOpacity={0.8}
+              accessibilityRole="button"
+              accessibilityState={{ selected: active }}
+              accessibilityLabel={f.label}
             >
               <AppText
                 variant="actionLabel"
