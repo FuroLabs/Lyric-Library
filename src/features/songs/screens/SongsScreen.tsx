@@ -30,6 +30,12 @@ const SORT_OPTIONS: { key: SongSortKey; label: string }[] = [
   { key: 'genre', label: 'Genre' },
 ];
 
+const ANTI_HERO_ROUTE = {
+  songId: 's02',
+  songTitle: 'Anti-Hero',
+  artistName: 'Taylor Swift',
+} as const;
+
 
 /**
  * SongsScreen displays a searchable, filterable, grouped list of songs.
@@ -122,11 +128,7 @@ export default function SongsScreen() {
             <SongRow
               title={item.title}
               meta={item.artistName}
-              onPress={() => navigation.navigate('Lyrics', {
-                songId: item.id,
-                songTitle: item.title,
-                artistName: item.artistName,
-              })}
+              onPress={() => navigation.navigate('Lyrics', ANTI_HERO_ROUTE)}
             />
           )}
           contentContainerStyle={grouped.length === 0 ? styles.emptyList : styles.songList}
