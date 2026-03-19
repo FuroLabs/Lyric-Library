@@ -94,7 +94,9 @@ function SongRow({ song, onPress }: Readonly<{ song: Song; onPress: (s: Song) =>
           {song.title}
         </AppText>
         <AppText variant="itemMeta" color={colors.textTertiary} numberOfLines={1}>
-          {song.artistName} · {song.albumTitle}
+          {song.albumTitle
+            ? `${song.artistName} · ${song.albumTitle}`
+            : song.artistName}
         </AppText>
       </View>
     </TouchableOpacity>
@@ -118,7 +120,7 @@ function ArtistRow({
           {artist.name}
         </AppText>
         <AppText variant="itemMeta" color={colors.textTertiary}>
-          {artist.songCount} songs available
+          {artist.songCount} {artist.songCount === 1 ? 'song' : 'songs'} available
         </AppText>
       </View>
     </TouchableOpacity>
@@ -142,7 +144,7 @@ function AlbumRow({
           {album.title}
         </AppText>
         <AppText variant="itemMeta" color={colors.textTertiary}>
-          {album.artistName} · {album.songCount} songs
+          {album.artistName} · {album.songCount} {album.songCount === 1 ? 'song' : 'songs'}
         </AppText>
       </View>
     </TouchableOpacity>
@@ -326,6 +328,7 @@ export default function SearchScreen({ navigation }: SearchScreenProps) {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
         style={styles.pillsScroll}
         contentContainerStyle={styles.pillsContent}
       >
