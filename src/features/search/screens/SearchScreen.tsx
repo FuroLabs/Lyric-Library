@@ -16,6 +16,7 @@ import { Feather as Icon } from '@expo/vector-icons';
 import { AppText, AppSearchBar } from '@/components';
 import { colors, spacing, radii, shadows } from '@/theme';
 import { useSearch } from '../hooks/useSearch';
+import type { UseSearchParams } from '../types';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { SearchStackParamList } from '@/app/navigationTypes';
 import type { Song, Artist, Album } from '@/types';
@@ -40,7 +41,7 @@ interface SearchScreenProps {
 }
 
 // ─── Filter config ────────────────────────────────────────────────────────────
-type FilterValue = 'all' | 'song' | 'artist' | 'album';
+type FilterValue = UseSearchParams['type'];
 const FILTERS: { label: string; value: FilterValue }[] = [
   { label: 'All',     value: 'all'    },
   { label: 'Songs',   value: 'song'   },

@@ -1,5 +1,7 @@
 export type { Artist, Song, Album, SearchFilterType } from '@/types';
 
+export type SearchScopeFilter = Exclude<import('@/types').SearchFilterType, 'lyrics'>;
+
 export interface SearchResults {
   songs:   import('@/types').Song[];
   artists: import('@/types').Artist[];
@@ -8,7 +10,7 @@ export interface SearchResults {
 
 export interface UseSearchParams {
   query: string;
-  type:  'all' | 'song' | 'artist' | 'album';
+  type:  SearchScopeFilter;
 }
 
 export interface UseSearchReturn {
