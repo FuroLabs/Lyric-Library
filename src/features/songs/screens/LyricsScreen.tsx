@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, Share, StyleSheet, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { AppScreen, AppText, EmptyState, ErrorState, LoadingState } from '@/components';
@@ -7,9 +6,10 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { SongsStackParamList } from '@/app/navigationTypes';
 import { useLyrics } from '@/hooks/queries/useLyrics';
 import { lyricsRepository } from '@/services';
-import { useSavedStore } from '@/store';
 import { colors, radii, shadows, spacing } from '@/theme';
-import type { LyricsTextSize, SavedLyric } from '@/types';
+import type { LyricsTextSize } from '@/types';
+import { useLyricsNavigation } from '../../lyrics/hooks/useLyricsNavigation';
+import { useLyricsState } from '../../lyrics/hooks/useLyricsState';
 
 type Props = NativeStackScreenProps<SongsStackParamList, 'Lyrics'>;
 
@@ -20,18 +20,6 @@ const lyricLineOverrides: Record<LyricsTextSize, { fontSize: number; lineHeight:
   normal: { fontSize: 17.6, lineHeight: 31 },
   large: { fontSize: 20, lineHeight: 34 },
 };
-
-function buildSavedLyric(songId: string, songTitle: string, artistName: string, previewText: string): SavedLyric {
-  return {
-    lyricId: songId,
-    songId,
-    songTitle,
-    artistName,
-    previewText,
-    savedAt: Date.now(),
-    viewCount: 0,
-  };
-}
 
 function getNextTextSize(size: LyricsTextSize): LyricsTextSize {
   const currentIndex = TEXT_SIZE_ORDER.indexOf(size);
@@ -47,18 +35,9 @@ export default function LyricsScreen({ route, navigation }: Readonly<Props>) {
     queryFn: () => lyricsRepository.getSongById(songId),
     enabled: !!songId,
   });
-  const isSaved = useSavedStore((state) => state.isSaved(songId));
-  const saveLyric = useSavedStore((state) => state.saveLyric);
-  const removeLyric = useSavedStore((state) => state.removeLyric);
+  const { isSaved, toggleSave } = useLyricsState(songId);
 
-  useFocusEffect(
-    useCallback(() => {
-      const parent = navigation.getParent();
-      parent?.setOptions({ tabBarStyle: { display: 'none' } });
-
-      return () => parent?.setOptions({ tabBarStyle: undefined });
-    }, [navigation]),
-  );
+  useLyricsNavigation(navigation);
 
   const previewText = useMemo(
     () => lyrics?.sections.flatMap((section) => section.lines).find(Boolean) ?? songTitle,
@@ -68,19 +47,6 @@ export default function LyricsScreen({ route, navigation }: Readonly<Props>) {
   const headerMeta = song?.albumTitle
     ? `${lyrics?.artistName ?? artistName} • ${song.albumTitle}`
     : lyrics?.artistName ?? artistName;
-
-  const handleSaveToggle = () => {
-    if (!lyrics) {
-      return;
-    }
-
-    if (isSaved) {
-      removeLyric(songId);
-      return;
-    }
-
-    saveLyric(buildSavedLyric(songId, lyrics.songTitle, lyrics.artistName, previewText));
-  };
 
   const handleShare = async () => {
     if (!lyrics) {
@@ -153,7 +119,7 @@ export default function LyricsScreen({ route, navigation }: Readonly<Props>) {
 
         <View style={styles.actionsRow}>
           <Pressable
-            onPress={handleSaveToggle}
+            onPress={() => lyrics && toggleSave(lyrics, previewText)}
             style={({ pressed }) => [styles.actionButton, styles.actionPrimary, pressed && styles.pressed]}
           >
             <AppText variant="actionLabel" color={colors.white} center>

@@ -1,53 +1,19 @@
-import React, { useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { AppButton, AppScreen, AppText, EmptyState, ErrorState, LoadingState } from '@/components';
-import { useSavedStore } from '@/store';
 import { colors, radii, shadows, spacing } from '@/theme';
-import type { SavedLyric } from '@/types';
 import { useLyrics } from '../hooks/useLyrics';
+import { useLyricsNavigation } from '../hooks/useLyricsNavigation';
+import { useLyricsState } from '../hooks/useLyricsState';
+import { buildSavedLyric } from '../utils/builders';
 import type { LyricsScreenProps } from '../types';
-
-function buildSavedLyric(songId: string, songTitle: string, artistName: string, previewText: string): SavedLyric {
-  return {
-    lyricId: songId,
-    songId,
-    songTitle,
-    artistName,
-    previewText,
-    savedAt: Date.now(),
-    viewCount: 0,
-  };
-}
 
 export default function LyricsScreen({ route, navigation }: LyricsScreenProps) {
   const { songId, songTitle, artistName } = route.params;
   const { data, isLoading, isError, refetch } = useLyrics(songId);
-  const isSaved = useSavedStore((state) => state.isSaved(songId));
-  const saveLyric = useSavedStore((state) => state.saveLyric);
-  const removeLyric = useSavedStore((state) => state.removeLyric);
+  const { isSaved, toggleSave } = useLyricsState(songId);
 
-  useFocusEffect(
-    useCallback(() => {
-      const parent = navigation.getParent();
-      parent?.setOptions({ tabBarStyle: { display: 'none' } });
-
-      return () => parent?.setOptions({ tabBarStyle: undefined });
-    }, [navigation]),
-  );
-
-  const handleSaveToggle = () => {
-    if (!data) {
-      return;
-    }
-
-    if (isSaved) {
-      removeLyric(songId);
-      return;
-    }
-
-    saveLyric(buildSavedLyric(songId, data.songTitle, data.artistName, data.previewText));
-  };
+  useLyricsNavigation(navigation);
 
   if (isLoading) {
     return (
@@ -104,7 +70,7 @@ export default function LyricsScreen({ route, navigation }: LyricsScreenProps) {
             <AppButton
               label={isSaved ? 'Remove' : 'Save'}
               variant={isSaved ? 'tertiary' : 'primary'}
-              onPress={handleSaveToggle}
+              onPress={() => data && toggleSave(data)}
               style={styles.actionButton}
             />
             <View style={styles.metaPill}>
