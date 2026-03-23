@@ -5,7 +5,6 @@ import { colors, radii, shadows, spacing } from '@/theme';
 import { useLyrics } from '../hooks/useLyrics';
 import { useLyricsNavigation } from '../hooks/useLyricsNavigation';
 import { useLyricsState } from '../hooks/useLyricsState';
-import { buildSavedLyric } from '../utils/builders';
 import type { LyricsScreenProps } from '../types';
 
 export default function LyricsScreen({ route, navigation }: LyricsScreenProps) {
