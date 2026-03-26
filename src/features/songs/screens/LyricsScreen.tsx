@@ -2,9 +2,17 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AppScreen, AppText } from '@/components';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { SongsStackParamList } from '@/app/navigationTypes';
+import type { ArtistsStackParamList, SongsStackParamList, SearchStackParamList, SavedStackParamList } from '@/app/navigationTypes';
 
-type Props = NativeStackScreenProps<SongsStackParamList, 'Lyrics'>;
+// LyricsScreen is used in multiple stacks, so we define props for each stack
+// and use the shared LyricsParams type for route.params
+export type LyricsScreenProps =
+  | NativeStackScreenProps<ArtistsStackParamList, 'Lyrics'>
+  | NativeStackScreenProps<SongsStackParamList, 'Lyrics'>
+  | NativeStackScreenProps<SearchStackParamList, 'Lyrics'>
+  | NativeStackScreenProps<SavedStackParamList, 'Lyrics'>;
+
+type Props = LyricsScreenProps;
 
 /**
  * Lyrics Display Screen — stub.
