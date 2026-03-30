@@ -9,4 +9,8 @@ export { Chip } from './primitives/Chip';
 export { ArtistCard } from './composite/ArtistCard';
 export { SongRow } from './composite/SongRow';
 export { ResultRow } from './composite/ResultRow';
-export { LoadingState, EmptyState, ErrorState } from './composite/StateViews';
+export { LoadingSpinner as LoadingState } from './composite/LoadingSpinner';
+export { EmptyState } from './composite/EmptyState';
+export { ErrorState } from './composite/ErrorState';
+// The legacy helper keeps old imports working
+export { LoadingState as LegacyLoadingState, EmptyState as LegacyEmptyState, ErrorState as LegacyErrorState } from './composite/StateViews';

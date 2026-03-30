@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, SectionList, useWindowDimensions, Platform, FlatList } from 'react-native';
-import { AppScreen, AppText, AppSearchBar, Chip, SongRow, LoadingState, EmptyState } from '@/components';
+import { AppScreen, AppText, AppSearchBar, Chip, SongRow, LoadingState, EmptyState, ErrorState } from '@/components';
 import { useSongs } from '@/hooks/queries/useSongs';
 import { groupByInitial } from '@/utils/groupers';
 import { useNavigation } from '@react-navigation/native';
@@ -47,7 +47,7 @@ export default function SongsScreen() {
   const [sort, setSort] = useState<SongSortKey>('title');
   const screenStyle = { ...styles.container, paddingHorizontal: width * 0.04 };
 
-  const { data: songs, isLoading, isError } = useSongs({ sort, query });
+  const { data: songs, isLoading, isError, refetch } = useSongs({ sort, query });
 
   // Filter and group songs
   const filteredSongs = useMemo(() => songs ?? [], [songs]);
@@ -103,11 +103,9 @@ export default function SongsScreen() {
         />
       </View>
 
-      {isLoading && (
-        <LoadingState message="Loading songs..." />
-      )}
+      {isLoading && <LoadingState message="Loading songs..." />}
       {!isLoading && isError && (
-        <EmptyState title="Failed to load songs." />
+        <ErrorState message="Failed to load songs." onRetry={refetch} />
       )}
       {!isLoading && !isError && (
         <SectionList

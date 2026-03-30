@@ -9,11 +9,10 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
-  ActivityIndicator,
   ScrollView,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
-import { AppText, AppSearchBar } from '@/components';
+import { AppText, AppSearchBar, LoadingState, EmptyState } from '@/components';
 import { colors, spacing, radii, shadows } from '@/theme';
 import { useSearch } from '../hooks/useSearch';
 import type { UseSearchParams } from '../types';
@@ -172,31 +171,26 @@ function RowDivider() {
 }
 
 // ─── Empty / no-results states ───────────────────────────────────────────────
-function EmptyState() {
+function SearchInitialState() {
   return (
     <View style={styles.stateWrap}>
       <Icon name="music" size={40} color={colors.textTertiary} />
-      <AppText variant="pageSubtitle" style={styles.stateTitle}>
-        Find songs and artists
-      </AppText>
-      <AppText variant="itemMeta" color={colors.textTertiary} style={styles.stateSub}>
-        Type in the search bar to get started
-      </AppText>
+      <EmptyState
+        title="Find songs and artists"
+        subtitle="Type in the search bar to get started"
+      />
     </View>
   );
 }
 
-// Fix 1: Props marked as read-only
-function NoResultsState({ query }: Readonly<{ query: string }>) {
+function SearchNoResultsState({ query }: Readonly<{ query: string }>) {
   return (
     <View style={styles.stateWrap}>
       <Icon name="search" size={40} color={colors.textTertiary} />
-      <AppText variant="pageSubtitle" style={styles.stateTitle}>
-        {`No results for "${query}"`}
-      </AppText>
-      <AppText variant="itemMeta" color={colors.textTertiary} style={styles.stateSub}>
-        Try a different search term or filter
-      </AppText>
+      <EmptyState
+        title={`No results for "${query}"`}
+        subtitle="Try a different search term or filter"
+      />
     </View>
   );
 }
@@ -249,13 +243,11 @@ export default function SearchScreen({ navigation }: SearchScreenProps) {
   // Fix 3: Extract nested ternary into an independent statement
   let resultsContent: React.ReactNode;
   if (isLoading) {
-    resultsContent = (
-      <ActivityIndicator style={styles.loader} color={colors.primary} size="large" />
-    );
+    resultsContent = <LoadingState message="Searching..." />;
   } else if (isEmpty) {
-    resultsContent = <EmptyState />;
+    resultsContent = <SearchInitialState />;
   } else if (hasNoResults) {
-    resultsContent = <NoResultsState query={query} />;
+    resultsContent = <SearchNoResultsState query={query} />;
   } else {
     resultsContent = (
       <>
@@ -449,21 +441,10 @@ const styles = StyleSheet.create({
   rowMeta: {
     flex: 1,
   },
-  loader: {
-    marginTop: spacing.huge,
-  },
   stateWrap: {
     alignItems: 'center',
     paddingTop: spacing.huge,
     paddingHorizontal: spacing.xxl,
     gap: spacing.md,
-  },
-  stateTitle: {
-    marginTop: spacing.sm,
-    textAlign: 'center',
-  },
-  stateSub: {
-    textAlign: 'center',
-    lineHeight: 20,
   },
 });
