@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { AppScreen, AppText } from '@/components';
-import { EmptyState } from '@/components/composite/StateViews';
+import { AppScreen, AppText, EmptyState } from '@/components';
 import { colors, spacing, radii, shadows } from '@/theme';
 import type { SavedStackParamList } from '@/app/navigationTypes';
 import type { SavedLyricItem, SavedTab } from '../types';
